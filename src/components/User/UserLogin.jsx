@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useLocalStorage } from "react-use";
-import { userLogin } from "../../api/UserApi";
+import { userLogin, userProfile } from "../../api/UserApi";
 import { alertError } from "../../lib/alert";
 
 export default function UserLogin() {
@@ -8,6 +8,7 @@ export default function UserLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [_, setToken] = useLocalStorage("token", "");
+    const [__, setRole] = useLocalStorage("role", "");
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -16,8 +17,14 @@ export default function UserLogin() {
         const responseBody = await response.json();
 
         if (response.status === 200) {
-            const token = responseBody.data.token;
-            setToken(token);
+            setToken(responseBody.data.token);
+            
+            const responseProfile = await userProfile(responseBody.data.token);
+            const responseProfileBody = await responseProfile.json();
+            if (responseProfile.status == 200) {
+                setRole(responseProfileBody.data.role);
+            }
+            
         } else {
             await alertError(responseBody.message);
         }

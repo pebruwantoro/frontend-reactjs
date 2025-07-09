@@ -6,6 +6,7 @@ import Layout from './components/Layout.jsx'
 import { Routes } from 'react-router'
 import UserNewAccount from './components/User/UserSellerRegister.jsx'
 import UserBuyerRegister from './components/User/UserBuyerRegister.jsx'
+import UserList from './components/User/UserLists.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')).render(
       
         // WITH TOKEN
         <Route path="users">
+          <Route path="dashboard" element={<UserList/>}/>
           <Route path="seller" element={<UserNewAccount/>}/>
         </Route>
       </Routes>

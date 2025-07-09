@@ -44,3 +44,25 @@ export const userRegister = async ({name, email, password, role}) => {
         })
     })
 }
+
+export const userProfile = async (token) => {
+    return await fetch(`${import.meta.env.VITE_API_BACKEND_PATH}/users/profile`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        }
+    })
+}
+
+export const userList = async (token) => {
+    return await fetch(`${import.meta.env.VITE_API_BACKEND_PATH}/users`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        }
+    })
+}
